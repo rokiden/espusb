@@ -1,3 +1,7 @@
+# FORK
+
+Handy HID mobile fullscreen layout for BIOS or similar, auto switch to AP after Sta error.
+
 # ESP8266 USB Software Driver
 
 I wanted to have USB on the ESP8266, and a while ago I saw on the ESP32 flier, it read: "Rich Peripherals" ... "Sorry, no USB!" I thought to myself, that is ridiculous.  Of course there's USB.

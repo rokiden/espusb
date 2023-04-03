@@ -1,0 +1,207 @@
+<html>
+
+<head>
+    <title>ESPUSB HID</title>
+    <script language="javascript" type="text/javascript" src=jquery-2.1.4.min.js.gz></script>
+    <!--<script language="javascript" type="text/javascript" src=https://code.jquery.com/jquery-3.6.4.min.js></script>-->
+    <script language="javascript" type="text/javascript" src=hid.js></script>
+    <script language="javascript" type="text/javascript" src=main.js></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <style>
+        table {
+            width: 100%;
+        }
+
+        #SystemMessage {
+            position: fixed;
+            top: 5px;
+            background-color: DarkSlateBlue;
+            color: #ffffff;
+            left: 5px;
+            display: none;
+        }
+
+        #MouseCap {
+            border-radius: 25px;
+            background: green;
+            padding: 20px;
+            height: 200px;
+        }
+
+        .MouseBtn {
+            border-radius: 5px;
+            background: red;
+            padding: 10px;
+            width: 70px;
+            height: 70px;
+            margin: auto;
+        }
+
+        .arrow-pad {
+            display: inline-block;
+        }
+
+        .arrow-pad input {
+            width: 80px;
+            height: 80px;
+            margin: 10px;
+            font-size: x-large;
+            font-weight: bold;
+        }
+
+        .spec-btns input {
+            width: 40px;
+            height: 40px;
+            margin: 2px;
+            padding: 0;
+        }
+
+        .spec-btns p {
+            margin: 4px;
+        }
+
+        .spec-btns-fs {
+            display: inline-block;
+        }
+
+        input[type=submit] {
+            background: #dbdbdb;
+            border: 2px solid #b5b5b5;
+            border-radius: 4px;
+        }
+
+        input[type=submit] {
+            background: #bebebe;
+            border: 2px solid #c7c7c7;
+            border-radius: 4px;
+            box-shadow: inset 0px 1px 4px white;
+        }
+
+        input[type=submit]:active {
+            background: #aeadad;
+            border: 2px solid #525252;
+            box-shadow: inset 0px 1px 5px black;
+        }
+
+        .mods input {
+            appearance: none;
+            background-color: #fff;
+            margin: 0;
+            -webkit-appearance: none;
+        }
+
+        .mods label {
+            padding: 6px 12px;
+            margin: 2px;
+            display: inline-block;
+            user-select: none;
+            cursor: pointer;
+            background: #bebebe;
+            border: 2px solid #c7c7c7;
+            border-radius: 4px;
+            box-shadow: inset 0px 1px 4px white;
+        }
+
+        .mods input:checked+label {
+            background: #aeadad;
+            border: 2px solid #525252;
+            box-shadow: inset 0px 1px 5px black;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>HID Fullscreen</h2>
+	<a href="/">Home<a/>
+    <hr>
+    <p id="SystemStatusClicker"></p>
+    <div id=HID>
+        <table>
+            <tr>
+                <td>
+                    <table>
+                        <tr>
+                            <td colspan=3>
+                                <div id=MouseCap>Mouse<br>Grab<br>Cell</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div id=Mouse0 class="MouseBtn">Left</div>
+                            </td>
+                            <td>
+                                <div id=Mouse2 class="MouseBtn">Middle</div>
+                            </td>
+                            <td>
+                                <div id=Mouse1 class="MouseBtn">Right</div>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <p>Keyboard:
+                        <button id="kbd">Focus/Show keyboard</button>
+                        <input id="kin" type="text" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off" />
+                        Layout:
+                        <select id="keyboardLayoutSelect" onchange="changeKeyboardLayout()">
+                            <option value="en">English</option>
+                            <option value="de">German</option>
+                        </select>
+                    </p>
+                    <p class="mods">
+                        <input type=checkbox id="mod0"><label for="mod0">Ctrl</label>
+                        <input type=checkbox id="mod1"><label for="mod1">Shift</label>
+                        <input type=checkbox id="mod2"><label for="mod2">Alt</label>
+                        <input type=checkbox id="mod3"><label for="mod3">Gui</label>
+                    </p>
+
+                    <div class="spec-btns">
+                        <p class="spec-btns-fs">
+                            <input type=submit value="F1" id="specialpress1">
+                            <input type=submit value="F2" id="specialpress2">
+                            <input type=submit value="F3" id="specialpress3">
+                            <input type=submit value="F4" id="specialpress4">
+                            <input type=submit value="F5" id="specialpress5">
+                            <input type=submit value="F6" id="specialpress6">
+                        </p>
+                        <p class="spec-btns-fs">
+                            <input type=submit value="F7" id="specialpress7">
+                            <input type=submit value="F8" id="specialpress8">
+                            <input type=submit value="F9" id="specialpress9">
+                            <input type=submit value="F10" id="specialpress10">
+                            <input type=submit value="F11" id="specialpress11">
+                            <input type=submit value="F12" id="specialpress12">
+                        </p>
+                        <p>
+                            <input type=submit value="Prnt" id="specialpress13">
+                            <input type=submit value="Pause" id="specialpress14">
+                            <input type=submit value="Del" id="specialpress15">
+                            <input type=submit value="Home" id="specialpress19">
+                            <input type=submit value="End" id="specialpress20">
+                        </p>
+                    </div>
+                    <table class="arrow-pad">
+                        <tr>
+                            <td><input type=submit value="ESC" id="specialpress0"></td>
+                            <td><input type=submit value="&uArr;" id="specialpress27"></td>
+                            <td><input type=submit value="PgUp" id="specialpress17"></td>
+                        </tr>
+                        <tr>
+                            <td><input type=submit value="&lArr;" id="specialpress25"></td>
+                            <td><input type=submit value="&crarr;" id="specialpress21"></td>
+                            <td><input type=submit value="&rArr;" id="specialpress24"></td>
+                        </tr>
+                        <tr>
+                            <td><input type=submit value="Tab" id="specialpress16"></td>
+                            <td><input type=submit value="&dArr;" id="specialpress26"></td>
+                            <td><input type=submit value="PgDn" id="specialpress18"></td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id=SystemMessage>...</div>
+</body>
+
+</html>

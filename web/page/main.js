@@ -177,6 +177,10 @@ var en_usblookup = {
 	0x1B : 0x29,
 	0x20 : 0x2C,
 	0xAD : 0x7F, // MUTE
+	
+	0xbe : 0x37, // .>
+	0xbc : 0x36, // ,<
+	0xbf : 0x38, // /?
 }
 var s1 = "abcdefghijklmnopqrstuvwxyz1234567890";
 var s2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()";
